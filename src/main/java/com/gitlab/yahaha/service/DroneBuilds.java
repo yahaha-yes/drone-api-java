@@ -1,6 +1,7 @@
 package com.gitlab.yahaha.service;
 
 import com.gitlab.yahaha.domain.build.Build;
+import com.gitlab.yahaha.domain.build.Logs;
 import okhttp3.OkHttpClient;
 
 import java.util.List;
@@ -36,6 +37,8 @@ public abstract class DroneBuilds extends AbstractDroneBaseApi  {
     public abstract Build info();
 
     public abstract List<Build> list();
+
+    public abstract List<Logs> logs(long stage, long step);
 
     public abstract Build restart();
 

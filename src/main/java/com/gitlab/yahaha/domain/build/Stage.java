@@ -1,5 +1,7 @@
 package com.gitlab.yahaha.domain.build;
 
+import java.util.List;
+
 public class Stage {
     private long id;
     private long repo_id;
@@ -21,6 +23,7 @@ public class Stage {
     private long version;
     private boolean on_success;
     private boolean on_failure;
+    private List<Step> steps;
 
     public void setStatus(String status) {
         this.status = status;
@@ -182,6 +185,14 @@ public class Stage {
         this.type = type;
     }
 
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+
     @Override
     public String toString() {
         return "Stage{" +
@@ -205,6 +216,7 @@ public class Stage {
                 ", version=" + version +
                 ", on_success=" + on_success +
                 ", on_failure=" + on_failure +
+                ", steps=" + steps +
                 '}';
     }
 }

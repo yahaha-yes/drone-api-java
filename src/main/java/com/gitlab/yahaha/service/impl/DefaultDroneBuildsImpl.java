@@ -1,6 +1,7 @@
 package com.gitlab.yahaha.service.impl;
 
 import com.gitlab.yahaha.domain.build.Build;
+import com.gitlab.yahaha.domain.build.Logs;
 import com.gitlab.yahaha.service.DroneBuilds;
 import okhttp3.OkHttpClient;
 
@@ -59,6 +60,11 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
 
     @Override
     public List<Build> list() {
+        return null;
+    }
+
+    @Override
+    public List<Logs> logs(long stage, long step) {
         return null;
     }
 
