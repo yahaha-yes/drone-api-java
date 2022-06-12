@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.gitlab.yahaha.common.DroneAPIsUtils.BASE_API_URL;
+import static com.gitlab.yahaha.common.DroneAPIsUtils.REPO_LIST_API_URL;
+
 public class DefaultDroneReposImpl extends DroneRepos {
-
-    private static final String BASE_API_URL = "/api/repos/";
-
-    private static final String REPO_LIST_API_URL = "/api/user/repos";
 
     public DefaultDroneReposImpl(OkHttpClient okHttpClient) {
         super(okHttpClient);

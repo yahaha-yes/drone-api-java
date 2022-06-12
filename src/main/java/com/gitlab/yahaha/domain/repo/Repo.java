@@ -4,7 +4,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.util.Objects;
 
 public class Repo {
-    private int id;
+    private long id;
     private String uid;
     private String slug;
     private String scm;
@@ -22,12 +22,12 @@ public class Repo {
     private boolean isProtected;
     private boolean ignore_forks;
     private boolean ignore_pull_requests;
-    private int timeout;
-    private int counter;
-    private int synced;
-    private int created;
-    private int updated;
-    private int version;
+    private long timeout;
+    private long counter;
+    private long synced;
+    private long created;
+    private long updated;
+    private long version;
 
     public boolean isActive() {
         return active;
@@ -53,31 +53,31 @@ public class Repo {
         return trusted;
     }
 
-    public int getCounter() {
+    public long getCounter() {
         return counter;
     }
 
-    public int getCreated() {
+    public long getCreated() {
         return created;
     }
 
-    public int getSynced() {
+    public long getSynced() {
         return synced;
     }
 
-    public int getTimeout() {
+    public long getTimeout() {
         return timeout;
     }
 
-    public int getUpdated() {
+    public long getUpdated() {
         return updated;
     }
 
-    public int getVersion() {
+    public long getVersion() {
         return version;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -125,11 +125,11 @@ public class Repo {
         this.config_path = config_path;
     }
 
-    public void setCounter(int counter) {
+    public void setCounter(long counter) {
         this.counter = counter;
     }
 
-    public void setCreated(int created) {
+    public void setCreated(long created) {
         this.created = created;
     }
 
@@ -145,7 +145,7 @@ public class Repo {
         this.git_ssh_url = git_ssh_url;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -177,11 +177,11 @@ public class Repo {
         this.slug = slug;
     }
 
-    public void setSynced(int synced) {
+    public void setSynced(long synced) {
         this.synced = synced;
     }
 
-    public void setTimeout(int timeout) {
+    public void setTimeout(long timeout) {
         this.timeout = timeout;
     }
 
@@ -193,11 +193,11 @@ public class Repo {
         this.uid = uid;
     }
 
-    public void setUpdated(int updated) {
+    public void setUpdated(long updated) {
         this.updated = updated;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(long version) {
         this.version = version;
     }
 
