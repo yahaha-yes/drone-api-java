@@ -1,55 +1,180 @@
 package com.gitlab.yahaha.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.gitlab.yahaha.common.Utils;
 import com.gitlab.yahaha.domain.secret.Secret;
 import com.gitlab.yahaha.domain.secret.SecretCreate;
 import com.gitlab.yahaha.domain.secret.SecretUpdate;
 import com.gitlab.yahaha.service.DroneSecrets;
 import okhttp3.OkHttpClient;
-
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
+import static com.gitlab.yahaha.common.DroneAPIsUtils.REPO_API_URL;
 
 public class DefaultDroneSecretsImpl extends DroneSecrets {
-    public DefaultDroneSecretsImpl(OkHttpClient okHttpClient){
+
+    private static Logger logger = Logger.getLogger(DefaultDroneSecretsImpl.class.toString());
+
+    public DefaultDroneSecretsImpl(OkHttpClient okHttpClient) {
         super(okHttpClient);
     }
 
     @Override
-    public DroneSecrets withOwner() {
-        return null;
+    public DroneSecrets withOwner(String owner) {
+        this.owner = owner;
+        return this;
     }
 
     @Override
-    public DroneSecrets withRepo() {
-        return null;
+    public DroneSecrets withRepo(String repo) {
+        this.repo = repo;
+        return this;
     }
 
     @Override
-    public DroneSecrets withSecret() {
-        return null;
+    public DroneSecrets withSecret(String secret) {
+        this.secret = secret;
+        return this;
     }
 
     @Override
     public Secret create(SecretCreate create) {
-        return null;
+        if (this.owner == null) {
+            logger.info("owner is null or empty!");
+            return null;
+        }
+        if (this.repo == null) {
+            logger.info("repo is null or empty!");
+            return null;
+        }
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets";
+        RequestBody body = RequestBody.create(JSON.toJSONString(create), Utils.getJsonMediaType());
+        Request request = new Request.Builder()
+                .addHeader(HEADER, token)
+                .url(requestUrl)
+                .post(body)
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return JSON.parseObject(response.body().string(), Secret.class);
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            return null;
+        }
     }
 
     @Override
     public boolean delete() {
-        return false;
+        if (this.owner == null) {
+            logger.info("owner is null or empty!");
+            return false;
+        }
+        if (this.repo == null) {
+            logger.info("repo is null or empty!");
+            return false;
+        }
+        if (this.secret == null) {
+            logger.info("secret is null or empty!");
+            return false;
+        }
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets/" + secret;
+        Request request = new Request.Builder()
+                .addHeader(HEADER, token)
+                .url(requestUrl)
+                .delete()
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return response.code() == 200;
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            return false;
+        }
     }
 
     @Override
     public Secret info() {
-        return null;
+        if (this.owner == null) {
+            logger.info("owner is null or empty!");
+            return null;
+        }
+        if (this.repo == null) {
+            logger.info("repo is null or empty!");
+            return null;
+        }
+        if (this.secret == null) {
+            logger.info("secret is null or empty!");
+            return null;
+        }
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets/" + secret;
+        Request request = new Request.Builder()
+                .addHeader(HEADER, token)
+                .url(requestUrl)
+                .get()
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return JSON.parseObject(response.body().string(), Secret.class);
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            return null;
+        }
     }
 
     @Override
     public List<Secret> list() {
-        return null;
+        if (this.owner == null) {
+            logger.info("owner is null or empty!");
+            return Collections.emptyList();
+        }
+        if (this.repo == null) {
+            logger.info("repo is null or empty!");
+            return Collections.emptyList();
+        }
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets";
+        Request request = new Request.Builder()
+                .addHeader(HEADER, token)
+                .url(requestUrl)
+                .get()
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return JSON.parseObject(response.body().string(), new TypeReference<ArrayList<Secret>>() {
+            });
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            return Collections.emptyList();
+        }
     }
 
     @Override
     public Secret update(SecretUpdate secretUpdate) {
-        return null;
+        if (this.owner == null) {
+            logger.info("owner is null or empty!");
+            return null;
+        }
+        if (this.repo == null) {
+            logger.info("repo is null or empty!");
+            return null;
+        }
+        if (this.secret == null) {
+            logger.info("secret is null or empty!");
+            return null;
+        }
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets";
+        RequestBody body = RequestBody.create(JSON.toJSONString(secretUpdate), Utils.getJsonMediaType());
+        Request request = new Request.Builder()
+                .addHeader(HEADER, token)
+                .url(requestUrl)
+                .patch(body)
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return JSON.parseObject(response.body().string(), Secret.class);
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            return null;
+        }
     }
 }

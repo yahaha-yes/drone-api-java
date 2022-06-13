@@ -2,6 +2,7 @@ package com.gitlab.yahaha.service;
 
 import com.gitlab.yahaha.domain.templates.CreateTemplate;
 import com.gitlab.yahaha.domain.templates.Template;
+import com.gitlab.yahaha.domain.templates.TemplateUpdate;
 import okhttp3.OkHttpClient;
 
 import java.util.List;
@@ -28,5 +29,5 @@ public abstract class DroneTemplates extends AbstractDroneBaseApi{
 
     public abstract List<Template> list();
 
-    public abstract Template update(String data);
+    public abstract Template update(TemplateUpdate templateUpdate);
 }

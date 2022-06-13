@@ -4,6 +4,7 @@ import com.gitlab.yahaha.domain.build.Build;
 import com.gitlab.yahaha.domain.build.Logs;
 import okhttp3.OkHttpClient;
 
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class DroneBuilds extends AbstractDroneBaseApi  {
@@ -13,6 +14,12 @@ public abstract class DroneBuilds extends AbstractDroneBaseApi  {
     protected String repo;
 
     protected String build;
+
+    protected String branch;
+
+    protected String commit;
+
+    protected HashMap<String,String> env;
 
     public DroneBuilds(OkHttpClient okHttpClient) {
         super(okHttpClient);
@@ -24,13 +31,15 @@ public abstract class DroneBuilds extends AbstractDroneBaseApi  {
 
     public abstract DroneBuilds withBuild(String build);
 
+    public abstract DroneBuilds withBranch(String branch);
+
+    public abstract DroneBuilds withCommit(String commit);
+
+    public abstract DroneBuilds withEnv(HashMap<String,String> env);
+
     public abstract boolean approve();
 
     public abstract Build create();
-
-    public abstract Build createWithBranch(String branch);
-
-    public abstract Build createWithBranchAndCommit(String branch,String commit);
 
     public abstract boolean decline();
 

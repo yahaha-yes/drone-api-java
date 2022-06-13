@@ -13,11 +13,14 @@ import okhttp3.Response;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
-import static com.gitlab.yahaha.common.DroneAPIsUtils.BASE_API_URL;
+import static com.gitlab.yahaha.common.DroneAPIsUtils.REPO_API_URL;
 import static com.gitlab.yahaha.common.DroneAPIsUtils.REPO_LIST_API_URL;
 
 public class DefaultDroneReposImpl extends DroneRepos {
+
+    private static Logger logger = Logger.getLogger(DefaultDroneReposImpl.class.toString());
 
     public DefaultDroneReposImpl(OkHttpClient okHttpClient) {
         super(okHttpClient);
@@ -35,13 +38,14 @@ public class DefaultDroneReposImpl extends DroneRepos {
             return JSON.parseObject(response.body().string(), new TypeReference<ArrayList<Repo>>() {
             });
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return Collections.emptyList();
         }
     }
 
     @Override
     public boolean chown() {
-        String requestUrl = url + BASE_API_URL + owner + "/" + repo + "/chown";
+        String requestUrl = url + REPO_API_URL + owner + "/" + repo + "/chown";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -50,13 +54,14 @@ public class DefaultDroneReposImpl extends DroneRepos {
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return false;
         }
     }
 
     @Override
     public boolean enable() {
-        String requestUrl = url + BASE_API_URL + "/" + owner + "/" + repo;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -65,13 +70,14 @@ public class DefaultDroneReposImpl extends DroneRepos {
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return false;
         }
     }
 
     @Override
     public boolean disable() {
-        String requestUrl = url + BASE_API_URL + "/" + owner + "/" + repo;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -80,13 +86,14 @@ public class DefaultDroneReposImpl extends DroneRepos {
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return false;
         }
     }
 
     @Override
     public Repo info() {
-        String requestUrl = url + BASE_API_URL + "/" + owner + "/" + repo;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -95,13 +102,14 @@ public class DefaultDroneReposImpl extends DroneRepos {
         try (Response response = okHttpClient.newCall(request).execute()) {
             return JSON.parseObject(response.body().string(), Repo.class);
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return null;
         }
     }
 
     @Override
     public Repo update(RepoUpdate repoUpdate) {
-        String requestUrl = url + BASE_API_URL + "/" + owner + "/" + repo;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo;
         RequestBody body = RequestBody.create(JSON.toJSONString(repoUpdate), Utils.getJsonMediaType());
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
@@ -111,13 +119,14 @@ public class DefaultDroneReposImpl extends DroneRepos {
         try (Response response = okHttpClient.newCall(request).execute()) {
             return JSON.parseObject(response.body().string(), Repo.class);
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return null;
         }
     }
 
     @Override
     public boolean repair() {
-        String requestUrl = url + BASE_API_URL + "/" + owner + "/" + repo + "/repair";
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/repair";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -126,6 +135,7 @@ public class DefaultDroneReposImpl extends DroneRepos {
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
         } catch (Exception exception) {
+            logger.info(exception.getMessage());
             return false;
         }
     }

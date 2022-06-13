@@ -17,5 +17,5 @@ public abstract class DroneUser extends AbstractDroneBaseApi {
 
     public abstract List<Repo> userRepos();
 
-    public abstract void sync();
+    public abstract boolean sync();
 }

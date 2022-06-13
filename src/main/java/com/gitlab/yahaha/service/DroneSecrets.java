@@ -9,15 +9,21 @@ import java.util.List;
 
 public abstract class DroneSecrets extends AbstractDroneBaseApi {
 
+    protected String owner;
+
+    protected String repo;
+
+    protected String secret;
+
     public DroneSecrets(OkHttpClient okHttpClient) {
         super(okHttpClient);
     }
 
-    public abstract DroneSecrets withOwner();
+    public abstract DroneSecrets withOwner(String owner);
 
-    public abstract DroneSecrets withRepo();
+    public abstract DroneSecrets withRepo(String repo);
 
-    public abstract DroneSecrets withSecret();
+    public abstract DroneSecrets withSecret(String secret);
 
     public abstract Secret create(SecretCreate create);
 

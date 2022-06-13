@@ -8,6 +8,13 @@ import okhttp3.OkHttpClient;
 import java.util.List;
 
 public abstract class DroneCron extends AbstractDroneBaseApi {
+
+    protected String owner;
+
+    protected String repo;
+
+    protected String crone;
+
     public DroneCron(OkHttpClient okHttpClient) {
         super(okHttpClient);
     }
