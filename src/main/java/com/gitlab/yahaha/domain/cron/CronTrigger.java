@@ -1,6 +1,6 @@
-package com.gitlab.yahaha.domain.crone;
+package com.gitlab.yahaha.domain.cron;
 
-public class CroneTrigger {
+public class CronTrigger {
     private long id;
     private long repo_id;
     private String trigger;

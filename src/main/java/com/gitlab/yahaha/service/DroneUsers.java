@@ -17,7 +17,7 @@ public abstract class DroneUsers extends AbstractDroneBaseApi{
 
     public abstract User create(UserCreate userCreate);
 
-    public abstract boolean delete(String login);
+    public abstract boolean delete();
 
     public abstract User info();
 

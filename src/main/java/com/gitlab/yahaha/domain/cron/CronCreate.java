@@ -1,6 +1,6 @@
-package com.gitlab.yahaha.domain.crone;
+package com.gitlab.yahaha.domain.cron;
 
-public class CroneCreate {
+public class CronCreate {
 
     private String name;
 

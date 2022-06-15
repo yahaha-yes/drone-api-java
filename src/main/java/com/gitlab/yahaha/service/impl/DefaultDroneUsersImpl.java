@@ -45,12 +45,12 @@ public class DefaultDroneUsersImpl extends DroneUsers {
     }
 
     @Override
-    public boolean delete(String login) {
+    public boolean delete() {
         if (this.login==null){
             logger.info("login is null or empty!");
             return false;
         }
-        String requestUrl = url + USERS_API_URL + "/" + login;
+        String requestUrl = url + USERS_API_URL + "/" + this.login;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)

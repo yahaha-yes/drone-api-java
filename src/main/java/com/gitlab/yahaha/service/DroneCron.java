@@ -1,8 +1,8 @@
 package com.gitlab.yahaha.service;
 
-import com.gitlab.yahaha.domain.crone.Crone;
-import com.gitlab.yahaha.domain.crone.CroneCreate;
-import com.gitlab.yahaha.domain.crone.CroneTrigger;
+import com.gitlab.yahaha.domain.cron.Cron;
+import com.gitlab.yahaha.domain.cron.CronCreate;
+import com.gitlab.yahaha.domain.cron.CronTrigger;
 import okhttp3.OkHttpClient;
 
 import java.util.List;
@@ -27,13 +27,13 @@ public abstract class DroneCron extends AbstractDroneBaseApi {
 
     public abstract boolean delete();
 
-    public abstract Crone create(CroneCreate croneCreate);
+    public abstract Cron create(CronCreate cronCreate);
 
-    public abstract Crone info();
+    public abstract Cron info();
 
-    public abstract List<Crone> list();
+    public abstract List<Cron> list();
 
-    public abstract CroneTrigger trigger();
+    public abstract CronTrigger trigger();
 
-    public abstract Crone update(CroneCreate croneCreate);
+    public abstract Cron update(CronCreate cronCreate);
 }
