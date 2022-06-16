@@ -45,11 +45,11 @@ public class DefaultDroneReposImpl extends DroneRepos {
 
     @Override
     public boolean chown() {
-        String requestUrl = url + REPO_API_URL + owner + "/" + repo + "/chown";
+        String requestUrl = url + REPO_API_URL +"/"+ owner + "/" + repo + "/chown";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
@@ -65,7 +65,7 @@ public class DefaultDroneReposImpl extends DroneRepos {
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
@@ -130,7 +130,7 @@ public class DefaultDroneReposImpl extends DroneRepos {
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;

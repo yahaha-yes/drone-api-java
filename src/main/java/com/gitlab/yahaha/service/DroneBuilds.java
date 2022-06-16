@@ -15,7 +15,7 @@ public abstract class DroneBuilds extends AbstractDroneBaseApi  {
 
     protected String build;
 
-    protected String branch;
+    protected String branch = "master";
 
     protected String commit;
 

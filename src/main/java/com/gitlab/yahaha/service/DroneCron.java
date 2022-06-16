@@ -13,7 +13,7 @@ public abstract class DroneCron extends AbstractDroneBaseApi {
 
     protected String repo;
 
-    protected String crone;
+    protected String cron;
 
     public DroneCron(OkHttpClient okHttpClient) {
         super(okHttpClient);

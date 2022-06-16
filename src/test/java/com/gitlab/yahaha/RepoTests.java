@@ -11,13 +11,13 @@ import java.util.List;
 
 public class RepoTests {
 
-    private String host = "";
+    private String host = "http://drone.p92-dev.k";
 
-    private String token = "";
+    private String token = "RfjKHfNJR2px9UzUhwGPmcav9wpg9Gnb";
 
-    private String repo = "";
+    private String repo = "freight-app";
 
-    private String owner = "";
+    private String owner = "ewivt";
 
     @Test
     public void repoChown() {

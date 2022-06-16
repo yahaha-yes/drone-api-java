@@ -11,13 +11,18 @@ import org.junit.Test;
 import java.util.List;
 
 public class TemplateTests {
-    private String host = "";
 
-    private String token = "";
+    private String host = "http://drone.p92-dev.k";
 
-    private String name = "test";
+    private String token = "RfjKHfNJR2px9UzUhwGPmcav9wpg9Gnb";
 
-    private String namespace ="";
+    private String name = "test.yaml";
+
+    private String data = "# A YAML template example.\nkind: pipeline\ntype: docker\nname: default\nsteps:\n   - name: {{ .input.name }}\n     image: {{ .input.image }}\n     commands:\n        - {{ .input.commands }}\n";
+
+    private String dataUpdate = "# YAML template example.\nkind: pipeline\ntype: docker\nname: default\nsteps:\n   - name: {{ .input.name }}\n     image: {{ .input.image }}\n     commands:\n        - {{ .input.commands }}\n";
+
+    private String namespace ="ewivt";
 
     @Test
     public void templateCreate(){
@@ -25,7 +30,7 @@ public class TemplateTests {
         DroneTemplates droneTemplates = droneClient.droneTemplates();
         CreateTemplate template = new CreateTemplate();
         template.setName(name);
-        template.setData("");
+        template.setData(data);
         Template result = droneTemplates.withNamespace(namespace).create(template);
         assert(result!=null);
     }
@@ -51,7 +56,7 @@ public class TemplateTests {
         DroneClient droneClient = new DefaultDroneClient(host, token);
         DroneTemplates droneTemplates = droneClient.droneTemplates();
         TemplateUpdate templateUpdate = new TemplateUpdate();
-        templateUpdate.setData("test");
+        templateUpdate.setData(dataUpdate);
         Template result = droneTemplates.withNamespace(namespace).withName(name).update(templateUpdate);
         assert(result!=null);
     }

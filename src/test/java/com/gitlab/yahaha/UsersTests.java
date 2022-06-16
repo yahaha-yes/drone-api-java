@@ -12,9 +12,9 @@ import java.util.List;
 
 public class UsersTests {
 
-    private String host = "";
+    private String host = "http://drone.p92-dev.k";
 
-    private String token = "";
+    private String token = "RfjKHfNJR2px9UzUhwGPmcav9wpg9Gnb";
 
     private String login = "test";
 
@@ -50,7 +50,7 @@ public class UsersTests {
         DroneClient droneClient = new DefaultDroneClient(host, token);
         DroneUsers droneUsers = droneClient.droneUsers();
         UserUpdate userUpdate = new UserUpdate();
-        userUpdate.setAdmin(true);
+        userUpdate.setAdmin(false);
         userUpdate.setActive(false);
         User user = droneUsers.withLogin(login).update(userUpdate);
         assert (user != null);

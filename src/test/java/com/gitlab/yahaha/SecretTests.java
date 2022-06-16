@@ -11,13 +11,14 @@ import org.junit.Test;
 import java.util.List;
 
 public class SecretTests {
-    private String host = "";
 
-    private String token = "";
+    private String host = "http://drone.p92-dev.k";
 
-    private String repo="";
+    private String token = "RfjKHfNJR2px9UzUhwGPmcav9wpg9Gnb";
 
-    private String owner="";
+    private String repo = "freight-app";
+
+    private String owner = "ewivt";
 
     private String name = "test";
 

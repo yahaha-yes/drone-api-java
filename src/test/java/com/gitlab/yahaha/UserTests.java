@@ -11,15 +11,15 @@ import java.util.List;
 
 public class UserTests {
 
-    private String host = "";
+    private String host = "http://drone.p92-dev.k";
 
-    private String token = "";
+    private String token = "RfjKHfNJR2px9UzUhwGPmcav9wpg9Gnb";
 
     @Test
     public void userFeed() {
         DroneClient droneClient = new DefaultDroneClient(host, token);
         DroneUser droneUser = droneClient.droneUser();
-        Object result = droneUser.feed();
+        List<Repo> result = droneUser.feed();
         assert (result != null);
     }
 

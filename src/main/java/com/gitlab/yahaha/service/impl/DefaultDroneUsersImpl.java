@@ -57,7 +57,7 @@ public class DefaultDroneUsersImpl extends DroneUsers {
                 .delete()
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
-            return response.code() == 200;
+            return response.code() < 300;
         } catch (Exception exception) {
             logger.info(exception.getMessage());
             return false;

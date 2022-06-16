@@ -89,7 +89,7 @@ public class DefaultDroneSecretsImpl extends DroneSecrets {
                 .delete()
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
-            return response.code() == 200;
+            return response.code() < 300;
         } catch (Exception exception) {
             logger.info(exception.getMessage());
             return false;
@@ -163,7 +163,7 @@ public class DefaultDroneSecretsImpl extends DroneSecrets {
             logger.info("secret is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets";
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/secrets/" + secret;
         RequestBody body = RequestBody.create(JSON.toJSONString(secretUpdate), Utils.getJsonMediaType());
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)

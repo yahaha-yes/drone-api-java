@@ -41,7 +41,7 @@ public class DefaultDroneCronImpl extends DroneCron {
 
     @Override
     public DroneCron withCrone(String crone) {
-        this.crone = crone;
+        this.cron = crone;
         return this;
     }
 
@@ -55,18 +55,18 @@ public class DefaultDroneCronImpl extends DroneCron {
             logger.info("repo is null or empty!");
             return false;
         }
-        if (this.crone == null) {
+        if (this.cron == null) {
             logger.info("crone is null or empty!");
             return false;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/crone/" + crone;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/cron/" + cron;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
                 .delete()
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
-            return response.code() == 200;
+            return response.code() < 300;
         } catch (Exception exception) {
             logger.info(exception.getMessage());
             return false;
@@ -83,7 +83,7 @@ public class DefaultDroneCronImpl extends DroneCron {
             logger.info("repo is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/crone";
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/cron";
         RequestBody body = RequestBody.create(JSON.toJSONString(cronCreate), Utils.getJsonMediaType());
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
@@ -108,11 +108,11 @@ public class DefaultDroneCronImpl extends DroneCron {
             logger.info("repo is null or empty!");
             return null;
         }
-        if (this.crone == null) {
+        if (this.cron == null) {
             logger.info("crone is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/crone/" + crone;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/cron/" + cron;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -136,7 +136,7 @@ public class DefaultDroneCronImpl extends DroneCron {
             logger.info("repo is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/cron";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -161,15 +161,15 @@ public class DefaultDroneCronImpl extends DroneCron {
             logger.info("repo is null or empty!");
             return null;
         }
-        if (this.crone == null) {
+        if (this.cron == null) {
             logger.info("crone is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/crone/" + crone;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/cron/" + cron;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             return JSON.parseObject(response.body().string(), CronTrigger.class);
@@ -189,11 +189,11 @@ public class DefaultDroneCronImpl extends DroneCron {
             logger.info("repo is null or empty!");
             return null;
         }
-        if (this.crone == null) {
+        if (this.cron == null) {
             logger.info("crone is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/crone/" + crone;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/cron/" + cron;
         RequestBody body = RequestBody.create(JSON.toJSONString(cronCreate), Utils.getJsonMediaType());
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)

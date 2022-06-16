@@ -13,7 +13,7 @@ public abstract class DroneUser extends AbstractDroneBaseApi {
 
     public abstract User info();
 
-    public abstract Object feed();
+    public abstract List<Repo> feed();
 
     public abstract List<Repo> userRepos();
 

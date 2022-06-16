@@ -2,11 +2,13 @@ package com.gitlab.yahaha.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.gitlab.yahaha.common.Utils;
 import com.gitlab.yahaha.domain.build.Build;
 import com.gitlab.yahaha.domain.build.Logs;
 import com.gitlab.yahaha.service.DroneBuilds;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
 
     private static Logger logger = Logger.getLogger(DefaultDroneBuildsImpl.class.toString());
 
-    public DefaultDroneBuildsImpl(OkHttpClient okHttpClient){
+    public DefaultDroneBuildsImpl(OkHttpClient okHttpClient) {
         super(okHttpClient);
     }
 
@@ -75,7 +77,7 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
             logger.info("build is null or empty!");
             return false;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build+"/approve";
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build + "/approve";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -91,13 +93,16 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
 
     @Override
     public Build create() {
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build + getUrl();
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + getUrl();
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.code() != 200) {
+                return null;
+            }
             return JSON.parseObject(response.body().string(), Build.class);
         } catch (Exception exception) {
             logger.info(exception.getMessage());
@@ -119,11 +124,11 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
             logger.info("build is null or empty!");
             return false;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build+"/decline";
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build + "/decline";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             return response.code() == 200;
@@ -171,7 +176,7 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
             logger.info("repo is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds";
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -200,7 +205,7 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
             logger.info("build is null or empty!");
             return null;
         }
-        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build+"/logs/"+stage+"/"+step;
+        String requestUrl = url + REPO_API_URL + "/" + owner + "/" + repo + "/builds/" + build + "/logs/" + stage + "/" + step;
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
@@ -233,7 +238,7 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             return JSON.parseObject(response.body().string(), Build.class);
@@ -271,14 +276,18 @@ public class DefaultDroneBuildsImpl extends DroneBuilds {
         }
     }
 
-    private String getUrl(){
-        String url = "/builds";
-        if (this.branch!=null){
-            url+="?branch=" + branch;
+    private String getUrl() {
+        StringBuilder url = new StringBuilder();
+        url.append("/builds");
+        if (this.branch != null) {
+            url.append("?branch=" + branch);
         }
-        if (this.commit!=null){
-            url+="&commit="+commit;
+        if (this.commit != null) {
+            url.append("&commit=" + commit);
         }
-        return url;
+        env.forEach((k,v)->{
+            url.append("&"+k+"="+v);
+        });
+        return url.toString();
     }
 }

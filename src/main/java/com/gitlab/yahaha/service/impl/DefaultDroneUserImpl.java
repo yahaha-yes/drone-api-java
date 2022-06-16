@@ -2,12 +2,14 @@ package com.gitlab.yahaha.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.gitlab.yahaha.common.Utils;
 import com.gitlab.yahaha.domain.repo.Repo;
 import com.gitlab.yahaha.domain.secret.Secret;
 import com.gitlab.yahaha.domain.user.User;
 import com.gitlab.yahaha.service.DroneUser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.util.ArrayList;
@@ -42,9 +44,20 @@ public class DefaultDroneUserImpl extends DroneUser {
     }
 
     @Override
-    public Object feed() {
-        //TODO()
-        return null;
+    public List<Repo> feed() {
+        String requestUrl = url + USER_API_URL +"/builds";
+        Request request = new Request.Builder()
+                .addHeader(HEADER, token)
+                .url(requestUrl)
+                .get()
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return JSON.parseObject(response.body().string(), new TypeReference<ArrayList<Repo>>() {
+            });
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -70,10 +83,10 @@ public class DefaultDroneUserImpl extends DroneUser {
         Request request = new Request.Builder()
                 .addHeader(HEADER, token)
                 .url(requestUrl)
-                .post(null)
+                .post(RequestBody.create("", Utils.getJsonMediaType()))
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
-            return response.code() == 200;
+            return response.code() < 300;
         } catch (Exception exception) {
             logger.info(exception.getMessage());
             return false;

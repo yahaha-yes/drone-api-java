@@ -75,6 +75,9 @@ public class DefaultDroneTemplatesImpl extends DroneTemplates {
                 .post(body)
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.code()!=200){
+                return null;
+            }
             return JSON.parseObject(response.body().string(), Template.class);
         } catch (Exception exception) {
             logger.info(exception.getMessage());
@@ -99,7 +102,7 @@ public class DefaultDroneTemplatesImpl extends DroneTemplates {
                 .delete()
                 .build();
         try (Response response = okHttpClient.newCall(request).execute()) {
-            return response.code() == 200;
+            return response.code() < 300;
         } catch (Exception exception) {
             logger.info(exception.getMessage());
             return false;

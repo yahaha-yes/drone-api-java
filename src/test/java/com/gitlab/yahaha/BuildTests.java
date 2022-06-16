@@ -12,19 +12,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BuildTests {
-    private String host = "";
 
-    private String token = "";
+    private String host = "http://drone.p92-dev.k";
 
-    protected String owner = "";
+    private String token = "RfjKHfNJR2px9UzUhwGPmcav9wpg9Gnb";
 
-    protected String repo = "";
+    private String repo = "freight-app";
 
-    protected String build = "";
+    private String owner = "ewivt";
 
-    protected String branch = "";
+    protected String build = "1";
 
-    protected String commit = "";
+    protected String branch = "master";
+
+    protected String commit = "test";
 
     protected HashMap<String, String> env = new HashMap<>();
 
@@ -40,7 +41,10 @@ public class BuildTests {
     public void buildCreate() {
         DroneClient droneClient = new DefaultDroneClient(host, token);
         DroneBuilds droneBuilds = droneClient.droneBuilds();
-        Build result = droneBuilds.withOwner(owner).withRepo(repo).withBuild(build).create();
+        HashMap<String,String> env = new HashMap();
+        env.put("test","test");
+        env.put("sample","sample");
+        Build result = droneBuilds.withOwner(owner).withRepo(repo).withEnv(env).create();
         assert (result != null);
     }
 
@@ -72,7 +76,7 @@ public class BuildTests {
     public void buildLogs() {
         DroneClient droneClient = new DefaultDroneClient(host, token);
         DroneBuilds droneBuilds = droneClient.droneBuilds();
-        List<Logs> logs = droneBuilds.withOwner(owner).withRepo(repo).withBuild(build).logs(1, 1);
+        List<Logs> logs = droneBuilds.withOwner(owner).withRepo(repo).withBuild(build).logs(1, 2);
         assert (logs.size() > 0);
     }
 
